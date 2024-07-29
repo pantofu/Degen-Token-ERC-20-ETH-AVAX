@@ -6,7 +6,7 @@ As required, the project has the following functions: mint, burn, transfer, rede
 
 ## Getting Started
 ### Executing the Program
-* Make sure you have the Avalanche Testnet Faucet in core.app and the testnet snowtracer to see the transactions present. Just connect your metamask account to proceed.
+* Make sure you have the Avalanche Testnet Faucet in core.app and the testnet snowtracer (https://testnet.snowtrace.io/) to see the transactions present. Just connect your metamask account to proceed.
 * This is a sample of each transaction made within Remix and is updated through Snowtracer.
 ![image](https://github.com/user-attachments/assets/1b974980-1add-4d99-bcb0-ef001cda3938)
 
