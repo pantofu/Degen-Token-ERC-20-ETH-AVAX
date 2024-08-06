@@ -13,24 +13,22 @@ contract DegenToken is ERC20, Ownable {
 
     mapping(uint256 => Item) public items;
     mapping(uint256 => string) public itemMessages;
-    uint256 public itemCount;
+
+    event ItemRedeemed(address indexed user, uint256 indexed itemId, string itemName);
 
     constructor(uint256 initialSupply, uint8 decimals) ERC20('Degen', 'DGN') Ownable(msg.sender) {
         _mint(msg.sender, initialSupply * (10 ** uint256(decimals)));
 
-
-        //Items
+        // Predefined items
         addItem(1, "Stickers", 5, "You have bought the Stickers!");
         addItem(2, "Pins", 8, "You have bought the Pins!");
         addItem(3, "Keychains", 10, "You have bought the Keychains!");
     }
     
-    // Only the contract owner can mint new tokens
     function mint(address to, uint256 amount) public onlyOwner {
         _mint(to, amount);
     }
     
-    // Any user can burn their tokens
     function burn(uint256 amount) public {
         _burn(msg.sender, amount);
     }
@@ -44,10 +42,13 @@ contract DegenToken is ERC20, Ownable {
     }
 
     function itemRedeem(uint256 itemId) public returns (string memory) {
-        uint256 price = items[itemId].price;
+        Item memory item = items[itemId];
+        uint256 price = item.price;
         require(balanceOf(msg.sender) >= price, "Insufficient token balance");
         
         _burn(msg.sender, price);
+        
+        emit ItemRedeemed(msg.sender, itemId, item.name);
         
         return itemMessages[itemId];
     }
@@ -60,6 +61,5 @@ contract DegenToken is ERC20, Ownable {
     ) internal {
         items[itemId] = Item(name, price);
         itemMessages[itemId] = message;
-        itemCount++;
     }
 }
